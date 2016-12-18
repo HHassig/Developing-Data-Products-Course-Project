@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NFL Player Data, 12/18/2016</title>
+  <meta charset="utf-8">
+  <meta name="description" content="NFL Player Data, 12/18/2016">
+  <meta name="author" content="Harrison Hassig">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>NFL Player Data, 12/18/2016</h1>
+    <h2>Coursera Developing Data Products Course Project</h2>
+    <p>Harrison Hassig<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Overview</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This project is designed to give an graphical representation of NFL player&#39;s daily fantasy salary compared to their respective average daily fantasy points. This is broken down by position, according to FanDuel.
+After plotting the players, a regression line is drawn. This is great, as visual learners can see which players are above average for their position, and which aren&#39;t.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Data Sources</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The data comes from FanDuel&#39;s website for the &quot;Main&quot; entry pool of NFL games on Sunday, December 18th 2016.
+FanDuel is nice enough to provide a CSV file for this data, which is unlinkable, but is included in the github repo and hosted here:</p>
+
+<p>(<a href="https://www.dropbox.com/s/px1yv5ioqj79i2l/playerData.csv">https://www.dropbox.com/s/px1yv5ioqj79i2l/playerData.csv</a>)</p>
+
+<pre><code>## Loading required package: ggplot2
+</code></pre>
+
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;
+</code></pre>
+
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot
+</code></pre>
+
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter
+</code></pre>
+
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout
+</code></pre>
+
+<pre><code class="r">summary(mydata$Position)
+</code></pre>
+
+<pre><code>##   D   K  QB  RB  TE  WR 
+##  26  26  82 156 130 193
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Calculations</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Here, we plot the players Salary (x-axis) against their Average Fantasy Points (FFPG) (y-axis) and then add our regression line. &quot;input$position&quot; allows for user input, part of the assignment. The code is shown below:</p>
+
+<pre><code class="r">mydata &lt;- subset(mydata, Position == input$position)
+ggplot(data = mydata, aes(x = Salary, y = FPPG, label = LastName)) + 
+  geom_point(aes(colour = Position)) +
+  geom_smooth(size = .5, method = loess) +
+  xlab(&quot;Salary&quot;) +
+  ylab(&quot;Average Points per Game&quot;) + 
+  ggtitle(&quot;NFL Data 12/18/2016&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Output</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The final output will be a shiny app that will include a brief explanation, a radio input block for the user to select which position they would like to see charted. This will then show the different players of that position graphed with their salary and average points per game. You can see a working version here:</p>
+
+<p>(<a href="https://hhassig.shinyapps.io/project_week_4/">https://hhassig.shinyapps.io/project_week_4/</a>)</p>
+
+<p><img src="figure/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Overview'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Data Sources'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Calculations'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Output'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
